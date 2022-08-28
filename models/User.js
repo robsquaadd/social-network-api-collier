@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const validation = require("../utils/validation");
+const emailValidation = require("../utils/validation");
 
 const UserSchema = new Schema(
   {
@@ -13,7 +13,7 @@ const UserSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      //validation: ----
+      validation: (emailValue) => emailValidation(emailValue),
     },
     thoughts: [
       {
@@ -36,7 +36,7 @@ const UserSchema = new Schema(
   }
 );
 
-userSchema.virtual("friendCount").get(function () {
+UserSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });
 
