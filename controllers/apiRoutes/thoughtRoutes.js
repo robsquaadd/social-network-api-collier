@@ -97,8 +97,8 @@ router.post("/:thoughtId/reactions", (req, res) => {
 
 router.delete("/:thoughtId/reactions/:reactionId", (req, res) => {
   Thought.findOneAndUpdate(
-    { reactionId: req.params.thoughtId },
-    { $pull: { reactions: req.params.reactionId } },
+    { _id: req.params.thoughtId },
+    { $pull: { reactions: { reactionId: req.params.reactionId } } },
     { new: true }
   )
     .then((dbThoughtData) => {
