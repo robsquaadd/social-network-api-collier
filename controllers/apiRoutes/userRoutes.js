@@ -63,13 +63,16 @@ router.delete("/:userId", (req, res) => {
         return;
       }
       dbUserData.thoughts.forEach((thought) => {
-        return Thought.delete({ _id: thought }).then((dbThoughtData) => {
-          if (!dbThoughtData) {
-            res.status(404).json({ message: "No Thought with that id exists" });
-            return;
+        return Thought.findOneAndDelete({ _id: thought }).then(
+          (dbThoughtData) => {
+            if (!dbThoughtData) {
+              res
+                .status(404)
+                .json({ message: "No Thought with that id exists" });
+              return;
+            }
           }
-          res.json(dbThoughtData);
-        });
+        );
       });
       res.json(dbUserData);
     })
